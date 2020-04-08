@@ -39,6 +39,12 @@ jobs:
       run: |
         ls -l
         pyinstaller src/app.py
-        chmod 400 aws_ubuntu_demo.pem
-        scp -i aws_ubuntu_demo.pem requirements.txt ubuntu@35.183.104.123:/home/ubuntu/temp
-        rm -rf built/* dist/*
+    - name: copy file via ssh key
+      uses: appleboy/scp-action@master
+      env:
+        HOST: ${{ secrets.HOST }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.KEY }}
+      with:
+        source: "requirements.txt"
+        target: "/home/ubuntu/temp"
