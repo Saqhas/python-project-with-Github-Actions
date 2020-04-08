@@ -39,5 +39,6 @@ jobs:
       run: |
         ls -l
         pyinstaller src/app.py
-        scp -r -i aws_ubuntu_demo.pem dist/* ubuntu@ec2-35-183-104-123.ca.central-1.compute.amazonaws.com:/home/ubuntu/temp
+        chmod 400 aws_ubuntu_demo.pem
+        scp -r -v -i aws_ubuntu_demo.pem dist/* ubuntu@ec2-35-183-104-123.ca.central-1.compute.amazonaws.com:/home/ubuntu/temp
         rm -rf built/* dist/*
