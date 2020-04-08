@@ -47,5 +47,5 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.KEY }}
       with:
-        source: "requirements.txt"
+        source: "dist/"
         target: "/home/ubuntu/temp"
