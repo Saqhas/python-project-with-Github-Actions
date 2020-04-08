@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 flask = "*"
 pytest = "*"
+pyinstaller = "*"
+setuptools = "==44.0.0"
 
 [requires]
 python_version = "3.7"
