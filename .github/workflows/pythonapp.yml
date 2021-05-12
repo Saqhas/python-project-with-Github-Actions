@@ -53,8 +53,8 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
-        user: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
+        username: ${{ secrets.USERNAME }}
+        port: ${{ secrets.PORT }}
         key: ${{ secrets.KEY}}
         script: |
           cd "/home/ubuntu/iENG-PID-UI"
