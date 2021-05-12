@@ -50,15 +50,14 @@ jobs:
         source: "dist/, src/, tests/"
         target: "/home/ubuntu/temp"
     - name: Perform database migration
-      uses: appleboy/ssh-action@master
+      uses: fifsky/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        port: ${{ secrets.PORT }}
-        key: ${{ secrets.KEY}}
-        script: |
+        command: |
           cd "/home/ubuntu/iENG-PID-UI"
-          pipenv shell
           cd "frontend/imageTranslateApp"
-          python manage.py makemigrations
-          python manage.py migrate
+          pipenv run python manage.py makemigrations
+          pipenv run python manage.py migrate
+        host: ${{ secrets.HOST }}
+        user: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY}}
+      
