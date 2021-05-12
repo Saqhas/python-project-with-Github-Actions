@@ -49,13 +49,15 @@ jobs:
       with:
         source: "dist/, src/, tests/"
         target: "/home/ubuntu/temp"
-    - if: ${{ github.event_name == 'push' }}
-      name: Perform database migration
+    - name: Perform database migration
       uses: fifsky/ssh-action@master
       with:
         command: |
           cd "/home/ubuntu/iENG-PID-UI"
-          ls
+          pipenv shell
+          cd "frontend/imageTranslateApp"
+          python manage.py makemigrations
+          python manage.py migrate
         host: ${{ secrets.HOST }}
         user: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY}}
