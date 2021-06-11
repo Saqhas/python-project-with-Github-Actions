@@ -10,7 +10,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -39,25 +39,26 @@ jobs:
       run: |
         ls -l
         pyinstaller src/app.py
-    - name: copy file via ssh key
-      uses: appleboy/scp-action@master
-      env:
-        HOST: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.KEY }}
-      with:
-        source: "dist/, src/, tests/"
-        target: "/home/ubuntu/temp"
+#     - name: copy file via ssh key
+#       uses: appleboy/scp-action@master
+#       env:
+#         HOST: ${{ secrets.HOST }}
+#         USERNAME: ${{ secrets.USERNAME }}
+#         PORT: ${{ secrets.PORT }}
+#         KEY: ${{ secrets.KEY }}
+#       with:
+#         source: "dist/, src/, tests/"
+#         target: "/home/ubuntu/temp"
     - name: Perform database migration
-      uses: fifsky/ssh-action@master
+      uses: garygrossgarten/github-action-ssh@release
       with:
         command: |
-          cd "/home/ubuntu/iENG-PID-UI"
-          cd "frontend/imageTranslateApp"
-          pipenv run python manage.py makemigrations
-          pipenv run python manage.py migrate
+          cd "/home/ubuntu/pid_generator"
+          # cd "frontend/imageTranslateApp"
+          # pipenv run python manage.py makemigrations
+          # pipenv run python manage.py migrate
+          chmod 777 pid-generator
         host: ${{ secrets.HOST }}
-        user: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY}}
+        username: ${{ secrets.USERNAME }}
+        privateKey: ${{ secrets.KEY}}
       
