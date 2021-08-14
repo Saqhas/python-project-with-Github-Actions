@@ -49,7 +49,8 @@ jobs:
 #       with:
 #         source: "dist/, src/, tests/"
 #         target: "/home/ubuntu/temp"
-    - name: Perform database migration
+    - if: job.status == 'success' and ${{ github.event_name == 'push' }}
+      name: Perform database migration
       uses: garygrossgarten/github-action-ssh@release
       with:
         command: |
