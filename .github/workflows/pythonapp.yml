@@ -24,7 +24,6 @@ jobs:
         pip install pipenv==2022.7.4
         pipenv lock --requirements > requirements.txt
         pip install -r requirements.txt
-        zip -r src.zip src/
     # - name: Lint with flake8
     #   run: |
     #     pip install flake8
@@ -80,7 +79,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: src.zip
+          asset_path: src/app.py
           asset_name: build
-          asset_content_type: application/zip
+          asset_content_type: application/data
       
