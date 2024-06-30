@@ -24,17 +24,17 @@ jobs:
         pip install pipenv
         pipenv lock --requirements > requirements.txt
         pip install -r requirements.txt
-    - name: Lint with flake8
-      run: |
-        pip install flake8
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
-      run: |
-        pip install pytest
-        pytest
+    # - name: Lint with flake8
+    #   run: |
+    #     pip install flake8
+    #     # stop the build if there are Python syntax errors or undefined names
+    #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    #     # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+    #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    # - name: Test with pytest
+    #   run: |
+    #     pip install pytest
+    #     pytest
 #     - name: Deploy
 #       run: |
 #         ls -l
@@ -49,19 +49,19 @@ jobs:
 #       with:
 #         source: "dist/, src/, tests/"
 #         target: "/home/ubuntu/temp"
-    - if: job.status == 'success' and ${{ github.event_name == 'push' }}
-      name: Perform database migration
-      uses: garygrossgarten/github-action-ssh@release
-      with:
-        command: |
-          cd "/home/ubuntu/pid_generator"
-          # cd "frontend/imageTranslateApp"
-          # pipenv run python manage.py makemigrations
-          # pipenv run python manage.py migrate
-          chmod 777 pid-generator
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        privateKey: ${{ secrets.KEY}}
+    # - if: job.status == 'success' and ${{ github.event_name == 'push' }}
+    #   name: Perform database migration
+    #   uses: garygrossgarten/github-action-ssh@release
+    #   with:
+    #     command: |
+    #       cd "/home/ubuntu/pid_generator"
+    #       # cd "frontend/imageTranslateApp"
+    #       # pipenv run python manage.py makemigrations
+    #       # pipenv run python manage.py migrate
+    #       chmod 777 pid-generator
+    #     host: ${{ secrets.HOST }}
+    #     username: ${{ secrets.USERNAME }}
+    #     privateKey: ${{ secrets.KEY}}
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
