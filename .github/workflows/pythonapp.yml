@@ -5,8 +5,8 @@ name: Python application
 
 on:
   push:
-    branches: [ master ]
-
+    tags:
+      - "v*"
 jobs:
   build:
 
@@ -62,6 +62,11 @@ jobs:
     #     host: ${{ secrets.HOST }}
     #     username: ${{ secrets.USERNAME }}
     #     privateKey: ${{ secrets.KEY}}
+    - name: Changelog
+      uses: scottbrenner/generate-changelog-action@master
+      id: Changelog
+      env:
+        REPO: ${{ github.repository }}
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -71,6 +76,8 @@ jobs:
           tag_name: ${{github.ref_name}}
           release_name: Release ${{github.ref_name}}
           draft: false
+          body: |
+            ${{ steps.Changelog.outputs.changelog }}
           prerelease: false
     - name: Upload Release Asset
       id: upload-release-asset 
