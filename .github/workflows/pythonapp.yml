@@ -66,7 +66,7 @@ jobs:
       id: create_release
       uses: actions/create-release@v1
       env:
-          GITHUB_TOKEN: ${{  github.token }}
+          GITHUB_TOKEN: ${{  secrets.GITHUB_TOKEN }}
       with:
           tag_name: "release_0.02"
           release_name: Release 0.02
@@ -76,10 +76,10 @@ jobs:
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
       env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: /home/ubuntu/pid_generator
+          asset_path: src
           asset_name: orchestrator_build
           asset_content_type: application/data
       
